@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+body{
+    font-family: 'Inter', sans-serif;
+}
+/* .img{
+    background-image: url(https://i.pinimg.com/736x/8e/ff/84/8eff846f4e72122d1d39c4a55ef35b38.jpg);
+    background-size: cover;
+} */
+
+.chatting::-webkit-scrollbar{
+    display: none;
+} 
+.chat::-webkit-scrollbar{
+    display: none;
+} 
