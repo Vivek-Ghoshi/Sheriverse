@@ -12,7 +12,6 @@ export const registerUser = createAsyncThunk("auth/register", async(credentials)
 export const loginUser = createAsyncThunk("auth/login",async ({role,credentials})=>{
   try {
     const {data} = await apiInstance.post(`/${role}/login`, credentials , {withCredentials: true});
-    console.log(data);
     return { user: data, role};
   } catch (error) {
     console.log(error.message);
@@ -22,8 +21,6 @@ export const loginUser = createAsyncThunk("auth/login",async ({role,credentials}
 
 export const logoutUser = createAsyncThunk("auth/logout", async(role)=>{
   try {
-    console.log(role,{isRejectedWithValue});
-    console.log("thunk to chala h");
     await apiInstance.get(`/${role}/logout`, {withCredentials: true});
     return null;
   } catch (error) {
@@ -35,27 +32,25 @@ export const logoutUser = createAsyncThunk("auth/logout", async(role)=>{
 
 const authSlice = createSlice({
     name: "auth",
-    initialState: {user:null,role:null, loading:false, error:null,isAuthenticated: false},
+    initialState: {user:null,role:null, loading:false, error:null},
     reducers: {},
     extraReducers: (builder) =>{
         builder
               .addCase(loginUser.pending, (state)=> {state.loading = true;} )
               .addCase(loginUser.fulfilled, (state,action) => {
-                state.isAuthenticated = true;
                 state.loading = false;
                 state.user = action.payload.user;
                 state.role = action.payload.role;
               })
               .addCase(loginUser.rejected, (state,error) => {
                 state.loading = false;
-                state.isAuthenticated = false;
+                
                 state.error = action.error.message;
               })
               .addCase(logoutUser.pending,(state)=>{
                 state.loading = true;
               })
               .addCase(logoutUser.fulfilled, (state)=> {
-                state.isAuthenticated = false;
                 state.loading = false;
                 state.user = null;
                 state.role = null;

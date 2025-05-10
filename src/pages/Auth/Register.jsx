@@ -1,5 +1,4 @@
-import InputField from "../../components/InputField";
-import Navbar from "../../components/Navbar";
+import { Link } from "react-router-dom";
 import Footer from "../../components/Footer";
 
 const Register = () => {
@@ -31,12 +30,10 @@ const Register = () => {
     </button>
 
     {/* Login Link */}
-    <p className="mt-4 text-center text-gray-500">
+    <div className="mt-4 text-center text-gray-500">
       Already have an account?{" "}
-      <a href="/login" className="text-[#457B9D] font-medium hover:underline transition-all">
-        Login here
-      </a>
-    </p>
+      <Link to={'/login'} className="text-[#457B9D] font-medium hover:underline transition-all">Login here</Link>
+    </div>
   </div>
 </div>
 

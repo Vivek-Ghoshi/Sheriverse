@@ -8,7 +8,7 @@ import { allInstructors, removeInstructor } from '../../redux/features/AdminSlic
 const Instructors = () => {
     const dispatch = useDispatch();
     const {instructors,loading} = useSelector(state => state.admin);
-
+    
     const removeHandler = (id)=>{
       dispatch(removeInstructor(id));
     }

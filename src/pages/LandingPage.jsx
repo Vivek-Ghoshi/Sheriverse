@@ -32,7 +32,7 @@ const LandingPage = () => {
       <p className="text-lg text-gray-200 mb-8 animate-fade-in">
         A complete education plateform ! By <span className="text-red-600 underline text-2xl font-bold">Sheryians</span> 
       </p>
-       <Link to={'/upload'} className="bg-[#E63946] font-semibold text-white px-8 py-3 rounded-xl shadow-lg transition-all 
+       <Link to={'/login'} className="bg-[#E63946] font-semibold text-white px-8 py-3 rounded-xl shadow-lg transition-all 
                          duration-300 transform hover:scale-105 hover:bg-[#FF6B9F] hover:shadow-2xl">
                     Get Started       
        </Link>

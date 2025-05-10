@@ -9,9 +9,11 @@ const AddInstructor = () => {
   const dispatch = useDispatch();
   const{instructors} = useSelector(state =>state.admin);
   
-  const instructorHandler = (data)=>{
-   const result = dispatch(addInstructor(data));
-     navigate('/admin/dashboard');
+  const instructorHandler = async(data)=>{
+   const result = await dispatch(addInstructor(data));
+   if(addInstructor.fulfilled.match(result)){
+     navigate('/admin/all-instructors');
+   }
   }
 
   return (

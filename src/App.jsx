@@ -10,7 +10,6 @@ import AdminDashboard from './pages/Dashboard/AdminDashboard'
 import CourseList from './pages/Courses/CourseList'
 import CourseDetails from './pages/Courses/CourseDetails'
 import NotFound from './pages/NotFound'
-import Profile from './pages/Profile/Profile'
 import Navbar from './components/Navbar'
 import AssignmentsQuizzes from './pages/AssignmentsQuizzes'
 import MyCourses from './pages/MyCourses'
@@ -33,7 +32,7 @@ const App = () => {
 
         {/* {Student Routes} */}
         <Route path='/student/dashboard' element={ <StudentDashboard/> }/>
-        <Route path='/student/profile' element={ <Profile/> }/>
+        {/* <Route path='/student/profile' element={ <Profile/> }/> */}
         {/* <Route path='/student/job-matchings' element={ <JobMatching/> }/> */}
         {/* <Route path='/student/ai-tutor' element={ <AITutor/> }/> */}
         <Route path='/student/assignments-quiz' element={ <AssignmentsQuizzes/> }/>

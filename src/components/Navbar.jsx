@@ -2,21 +2,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "../redux/features/AuthSlice";
 import { useEffect } from "react";
+import { persistor } from "../redux/store/Store";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {role,isAuthenticated} = useSelector(state => state.auth);
-  const logoutHandler = (role)=>{
-    console.log("role before Logout",role);
-    dispatch(logoutUser(role)); 
-    console.log("role after Logout",role);
-  }
-  useEffect(()=>{
-    if(!isAuthenticated){
-      navigate('/login');
+  const {role,user} = useSelector(state => state.auth);
+
+    const logoutHandler = async (role)=>{
+      await dispatch(logoutUser(role)); 
+      await persistor.purge();
+      window.location.href = '/';
     }
-  },[isAuthenticated,navigate]);
   return (
     <nav className="text-zinc-100 bg-gradient-to-r from-[#E63946] via-[#457B9D] to-[#1D3557] p-4 px-10 border-b-2 border-zinc-400">
       <div className="container mx-auto flex justify-between items-center">
@@ -41,7 +38,6 @@ const Navbar = () => {
           <li>
             <Link
               onClick={()=>logoutHandler(role)}
-              to={`/login`}
               className="hover:text-[#E63946] hover:border-b-2 text-[#A8DADC] font-semibold transition-colors duration-300"
             >
               Logout

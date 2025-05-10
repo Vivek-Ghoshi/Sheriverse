@@ -35,7 +35,7 @@ export const addInstructor = createAsyncThunk("admin/addinstructor", async (deta
 
 export const removeInstructor = createAsyncThunk("admin/removeinstructor", async (id)=>{
     try {
-       const response =   await apiInstance.get(`/admin/instructor/remove/${id}`,{
+      await apiInstance.get(`/admin/instructor/remove/${id}`,{
             withCredentials:true,
         });
         return id;
@@ -68,7 +68,7 @@ const adminSlice = createSlice({
                 state.instructors.push(action.payload);
               })
               .addCase(removeInstructor.fulfilled, (state,action)=>{
-                 state.instructors = state.instructors.filter(inst => inst.id != action.payload);
+                 state.instructors = state.instructors.filter(inst => inst._id !== action.payload);
               })
              .addCase(allInstructors.fulfilled, (state,action)=>{
                 state.instructors = action.payload;
