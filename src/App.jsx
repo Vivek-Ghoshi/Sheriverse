@@ -18,6 +18,9 @@ import Instructors from './pages/Profile/Instructors'
 import CreateAssignment from './pages/CreateAssignment'
 import Allassignments from './pages/Allassignments'
 import AboutUs from './pages/AboutUs'
+import CourseContentLayout from './pages/Courses/CourseContentLayout'
+import ContentUploader from './pages/Courses/ContentUploader'
+import CourseManager from './pages/Courses/CourseManager'
 
 const App = () => {
   return (
@@ -36,6 +39,9 @@ const App = () => {
         {/* <Route path='/student/job-matchings' element={ <JobMatching/> }/> */}
         {/* <Route path='/student/ai-tutor' element={ <AITutor/> }/> */}
         <Route path='/student/assignments-quiz' element={ <AssignmentsQuizzes/> }/>
+        <Route path='/content' element={ <CourseContentLayout/> } />
+        <Route path='/admin/courses/:id/add-content' element={<ContentUploader/>} />
+        <Route path='/admin/manage-courses' element={<CourseManager/>} />
 
         {/* {Instructor Routes} */}
         <Route path='/instructor/dashboard' element={ <InstructorDashboard/> }/>

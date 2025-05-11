@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "../redux/features/AuthSlice";
-import { useEffect } from "react";
 import { persistor } from "../redux/store/Store";
 
 const Navbar = () => {

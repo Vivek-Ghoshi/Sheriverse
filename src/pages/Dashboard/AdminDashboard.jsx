@@ -22,7 +22,7 @@ const AdminDashboard = () => {
   </Link>
 
   {/* Course Management */}
-  <Link to="/admin/courses" className="bg-gradient-to-r from-green-600 to-teal-500 p-8 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+  <Link to="/admin/manage-courses" className="bg-gradient-to-r from-green-600 to-teal-500 p-8 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
     <h2 className="text-3xl font-bold mb-4">📚 Manage Courses</h2>
     <p className="text-lg opacity-80">Create, update, or delete courses.</p>
   </Link>
