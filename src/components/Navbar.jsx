@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { logoutUser } from "../redux/features/AuthSlice";
 import { persistor } from "../redux/store/Store";
 
@@ -13,36 +13,67 @@ const Navbar = () => {
       await persistor.purge();
       window.location.href = '/';
     }
+
+    const navLinkClass = ({isActive}) =>
+       isActive ? "text-red-500 font-semibold" :
+       "hover:text-[#F4A261] hover:border-b-2 text-[#E9ECEF] font-semibold transition-colors duration-300"
+    
   return (
     <nav className="text-zinc-100 bg-gradient-to-r from-[#E63946] via-[#457B9D] to-[#1D3557] p-4 px-10 border-b-2 border-zinc-400">
       <div className="container mx-auto flex justify-between items-center">
         <h1 className="text-3xl font-bold text-white">SheriVerse</h1>
-        <ul className="flex space-x-6">
+        {user ? <ul className="flex space-x-6">
           <li>
-            <Link
+            <NavLink
               to={`/${role}/dashboard`}
-              className="hover:text-[#F4A261] hover:border-b-2 text-[#E9ECEF] font-semibold transition-colors duration-300"
+              className={navLinkClass}
             >
               Home
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link
+            <NavLink
               to={`/about`}
-              className="hover:text-[#F4A261] hover:border-b-2 text-[#E9ECEF] font-semibold transition-colors duration-300"
+              className={navLinkClass}
             >
               About
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link
+            <NavLink
               onClick={()=>logoutHandler(role)}
-              className="hover:text-[#E63946] hover:border-b-2 text-[#A8DADC] font-semibold transition-colors duration-300"
+              className={navLinkClass}
             >
               Logout
-            </Link>
+            </NavLink>
           </li>
-        </ul>
+        </ul> : <ul className="flex space-x-6">
+          <li>
+            <NavLink
+              to={`/`}
+              className={navLinkClass}
+            >
+              Intro
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={`/login`}
+              className={navLinkClass}
+            >
+              Login
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={'/register'}
+              className={navLinkClass}
+            >
+              Register
+            </NavLink>
+          </li>
+        </ul>}
+       
       </div>
     </nav>
   );

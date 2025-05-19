@@ -7,6 +7,7 @@ import { getAllCourses } from "../../redux/features/CommanSlice";
 
 const CourseList = () => {
   const dispatch = useDispatch();
+  const {role} = useSelector(state => state.auth);
   const {courses} = useSelector(state => state.comman);
   useEffect(()=>{
      dispatch(getAllCourses())
@@ -32,7 +33,11 @@ const CourseList = () => {
             {/* <span className="w-60 h-fit bg-green-500 ml-24 px-4 py-2 rounded-lg font-bold">Buy Course</span> */}
             <Link
               onClick={()=>courseDetsHandler(course._id)}
-              to={`/courses/${course._id}`}
+              to={
+                role == 'student' ?
+                `/courses/${course._id}` :
+                `/admin/monitor-course/${course._id}` 
+              }
               className="bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-lg text-white font-semibold"
             >
               View Details

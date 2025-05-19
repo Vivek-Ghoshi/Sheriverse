@@ -1,60 +1,91 @@
 import { Link } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getEnrolledCourses } from "../../redux/features/StudentSlice";
+import { getAllCourses } from "../../redux/features/CommanSlice";
 
 const StudentDashboard = () => {
-   const {user} = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+   const{ user} = useSelector(state => state.auth.user);
+   let profile = useSelector(state => state.student.student);
+   if(!profile){
+    profile = user;
+   }
+   const { enrollCourses } = useSelector(state => state.student);
+    const courseList = Array.isArray(enrollCourses)? enrollCourses : [enrollCourses];
+
+   useEffect(()=>{
+       dispatch(getEnrolledCourses());
+       dispatch(getAllCourses());
+   },[dispatch])
+   
+  //   const enrolledCourses = [
+  //   "JavaScript Essentials",
+  //   "React Masterclass",
+  //   "Data Structures in Java",
+  // ];
   return (
     <div className="flex">
       <Sidebar role="student" />
-      <div className="flex-1 p-8 bg-white">
-        <h1 className="text-3xl font-bold mb-8 text-[#4F46E5]">! Hey <span className="capitalize">{user?.user.name}</span> 👋</h1>
+     <div className="w-full min-h-[88.8vh] bg-black text-white flex justify-center items-center px-4 py-[2.9vw]">
+      <div className="w-full max-w-5xl bg-[#1a1c2c] rounded-3xl shadow-2xl p-6 md:p-8 flex flex-col gap-6 max-h-[95vh] overflow-y-auto">
 
-        <div className="flex w-full bg-zinc-900 rounded-xl py-3">
-          <div className="left w-1/2 p-6 border-r-2 border-zinc-600">
-           <img className="w-26 border-3 border-green-600 h-26 bg-zinc-500 object-cover rounded-full mx-auto overflow-hidden" src="https://media.istockphoto.com/id/2160473960/photo/happy-satisfied-math-teacher-in-elementary-class.webp?a=1&b=1&s=612x612&w=0&k=20&c=88SRHMeAozO221getjzwDbXMBKHyYN7qEbGWTZPHV7A=" alt="your img" />
-           <h3 className="mx-auto text-center mt-3 font-semibold text-zinc-400 capitalize">{user.user.name}</h3>
-           <h4 className="text-center font-semibold capitalize text-xs mt-2 text-red-600">full stack devloper</h4>
-           <div className="batches w-full h-10 flex  items-center justify-evenly mt-4">
-            <h4 className="px-4 py-2 bg-blue-500 text-white text-xs font-semibold rounded-2xl hover:bg-blue-700">J33</h4>
-            <h4 className="px-4 py-2 bg-blue-500 text-white text-xs font-semibold rounded-2xl hover:bg-blue-700">B25</h4>
-            <h4 className="px-4 py-2 bg-blue-500 text-white text-xs font-semibold rounded-2xl hover:bg-blue-700">N18</h4>
-            <h4 className="px-4 py-2 bg-blue-500 text-white text-xs font-semibold rounded-2xl hover:bg-blue-700">TNP01</h4>
-            <h4 className="px-4 py-2 bg-blue-500 text-white text-xs font-semibold rounded-2xl hover:bg-blue-700">R15</h4>
-           </div>
-           <div className="others w-full px-4 py-3 border-t-2 border-zinc-300 flex justify-evenly mt-2">
-            <Link className="px-4 py-2 text-sm font-semibold bg-green-600 rounded-full text-white hover:bg-green-900">LinkedIn</Link>
-            <Link className="px-4 py-2 text-sm font-semibold bg-green-600 rounded-full text-white hover:bg-green-900">Github</Link>
-            <Link className="px-4 py-2 text-sm font-semibold bg-green-600 rounded-full text-white hover:bg-green-900">Resume</Link>
-            <Link className="px-4 py-2 text-sm font-semibold bg-green-600 rounded-full text-white hover:bg-green-900">Mail</Link>
-           </div>
+        {/* Header */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-4">
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-[#457B9D]">
+              <img
+                src={profile.profile ? profile.profile : "https://i.pravatar.cc/150?img=3"}
+                alt="profile"
+                className="object-cover w-full h-full"
+              />
+            </div>
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold capitalize">{profile.name ? profile.name : user.name}</h2>
+              <p className="text-sm text-gray-400 capitalize">{user.role} | {profile.bio ? profile.bio : "" }</p>
+            </div>
           </div>
-          <div className="right w-1/2 grid grid-cols-2 p-6 gap-6">
-          <div className="bg-[#f5b041] w-48 p-6 rounded-xl shadow-md">
-            <h2 className="text-xl  font-bold mb-4">Pending Assignments</h2>
-            <p className="text-gray-600"></p>
-          </div>
+          <Link to={'/student/edit-profile'} className="bg-[#457B9D] hover:bg-[#6D597A] px-4 py-2 rounded-xl text-sm font-medium transition">
+            ✏️ Edit Profile
+          </Link>
+        </div>
 
-          <div className="bg-[#CCCCFF] w-48 p-6 rounded-xl shadow-md">
-            <h2 className="text-xl  font-bold mb-4">Completed Assignments</h2>
-            <p className="text-gray-600"></p>
+        {/* Details */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm md:text-base text-gray-300">
+          <div className="bg-[#2b2d42] p-4 rounded-lg shadow">
+            <p className="text-gray-400 mb-1">Email:</p>
+            <p className="font-semibold text-white lowercase">{user.email}</p>
           </div>
-
-          <div className="bg-[#6495ED] w-48 p-6 rounded-xl shadow-md">
-            <h2 className="text-xl font-bold mb-4">Personalized Learning</h2>
-            <p className="text-gray-600"></p>
+          <div className="bg-[#2b2d42] p-4 rounded-lg shadow">
+            <p className="text-gray-400 mb-1">Phone:</p>
+            <p className="font-semibold text-white">{profile.phone ? profile.phone : "123XXXXX23"}</p>
           </div>
-
-          <div className="bg-[#76d7c4] w-48 p-6 rounded-xl shadow-md">
-            <h2 className="text-xl font-semibold mb-4">Job Matching</h2>
-            <p className="text-gray-600"></p>
-          </div>
+          <div className="bg-[#2b2d42] p-4 rounded-lg shadow">
+            <p className="text-gray-400 mb-1">Courses Enrolled:</p>
+            <p className="font-semibold text-white">{courseList.length}</p>
           </div>
         </div>
-        <div className="bottom w-full h-40 bg-zinc-600 mt-4">
-          
+
+        {/* Enrolled Courses (Compact & Scrollable) */}
+        <div>
+          <h3 className="text-xl font-semibold mb-2">📚 Enrolled Courses</h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-h-40 overflow-y-auto pr-2">
+            {courseList.map((course, index) => (
+              <div
+                key={index}
+                className="bg-[#33354d] rounded-lg p-3 text-sm flex flex-col items-start justify-between hover:bg-[#3b3d5c] transition"
+              >
+                <h4 className="font-semibold text-white mb-1 truncate">
+                  {course.title}
+                </h4>
+                <p className="text-gray-400 text-xs">Progress: 40%</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

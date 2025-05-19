@@ -50,6 +50,19 @@ export const allInstructors = createAsyncThunk("admin/instructors",async()=>{
     })
     return data;
 })
+
+export const uploadContent = createAsyncThunk("uploadContent", async({formData,id})=>{
+    console.log("ye hit hua");
+    const {data} = await apiInstance.post(`/admin/courses/${id}/add-content`,formData,{
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        
+    });
+  console.log("data came from route backend ", data);
+    return data;
+})
 const adminSlice = createSlice({
     name: "admin",
     initialState: {courses:[], instructors: [],loading: false},
@@ -73,6 +86,9 @@ const adminSlice = createSlice({
              .addCase(allInstructors.fulfilled, (state,action)=>{
                 state.instructors = action.payload;
              })
+             .addCase(uploadContent.fulfilled,(state,action)=>{
+             state.courses.push(action.payload);
+           })
     },
 })
 

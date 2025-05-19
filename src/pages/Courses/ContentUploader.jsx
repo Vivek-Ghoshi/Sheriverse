@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import SortableItem from "../../components/SortableItem";
+
 import {
   DndContext,
   closestCenter,
@@ -12,10 +14,17 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import SortableItem from "../../components/SortableItem";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { uploadContent } from "../../redux/features/AdminSlice";
+
 
 const ContentUploader = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { id } = useParams();
   const [videos, setVideos] = useState([]);
+  const [popup, setPopup] = useState(false);
   const fileInputRef = useRef(null);
 
   const sensors = useSensors(
@@ -74,8 +83,38 @@ const ContentUploader = () => {
     }
   };
 
+  const uploadHandler = (id) => {
+    const formData = new FormData();
+
+    videos.forEach((video) => {
+      formData.append("titles", video.title);
+      formData.append("descriptions", video.description);
+      formData.append("orders", video.order);
+      formData.append("videos", video.file);
+    });
+    setPopup(true);
+    setTimeout(() => {
+      setPopup(false);
+    }, 3000);
+    dispatch(uploadContent({ formData, id }));
+    setVideos([]);
+    // navigate('/admin/manage-courses')
+  };
   return (
     <div className="bg-black min-h-screen p-8 text-white">
+      {popup && (
+        <div className="fixed top-6 right-6 z-50">
+          <div className="bg-gradient-to-r from-blue-700 via-purple-600 to-indigo-700 text-white px-6 py-4 rounded-xl shadow-2xl backdrop-blur-md border border-white/10 animate-bounce transition-all duration-300 ease-in-out flex items-center space-x-4">
+            <span className="text-2xl animate-spin-slow">🚀</span>
+            <div>
+              <h3 className="font-semibold text-lg">Uploading Soon!</h3>
+              <p className="text-sm text-gray-200">
+                Your videos will be uploaded shortly...
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
       <h1 className="text-2xl font-bold mb-6">📥 Upload Content</h1>
 
       {/* Hidden file input */}
@@ -125,11 +164,13 @@ const ContentUploader = () => {
                 </thead>
                 <tbody>
                   {videos.map((video, index) => (
-                    <SortableItem key={video.id}
+                    <SortableItem
+                      key={video.id}
                       video={video}
                       index={index}
                       onChange={handleChange}
-                      onRemove={handleRemove}/>
+                      onRemove={handleRemove}
+                    />
                   ))}
                 </tbody>
               </table>
@@ -137,7 +178,7 @@ const ContentUploader = () => {
           </DndContext>
 
           <button
-            onClick={() => console.log(videos)} // Replace with your upload function
+            onClick={() => uploadHandler(id)} // Replace with your upload function
             className="mt-6 bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-xl text-white font-medium shadow-md transition"
           >
             🚀 Submit Videos

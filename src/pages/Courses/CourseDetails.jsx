@@ -1,5 +1,3 @@
-
-import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { enrollCourse } from "../../redux/features/StudentSlice";
 import { useNavigate, useParams } from "react-router-dom";
@@ -22,7 +20,7 @@ const CourseDetails = () => {
         <img src={courseDetails.thumbnailUrl} alt={courseDetails.title} className="rounded-xl w-full h-full object-cover  mb-8" />
         </div> */}
         <div  className="relative mx-auto w-[60vw] h-100 bg-zinc-900 rounded-xl mt-10">
-         <video controls autoPlay muted loop src={courseDetails.videoUrl} className="w-full h-full object-contain">Intro Video</video>
+         <video controls autoPlay muted loop src={courseDetails.introUrl} className="w-full h-full object-contain">Intro Video</video>
         </div>
 
         <h1 className="text-5xl font-bold mb-4 capitalize mt-10 ">{courseDetails.title}</h1>

@@ -7,6 +7,8 @@ export const getAllCourses = createAsyncThunk("getallcourses", async()=>{
     });
     return data;
 })
+
+
 // export const assignment = createAsyncThunk("student/assignments", async()=>{
 //     const {data} = await apiInstance.get("/student/assignments",{withCredentials:true});
 //     return data;
@@ -24,6 +26,7 @@ const commanSlice = createSlice({
              state.loading = false,
              state.courses = action.payload;
            })
+           
     }
 })
 

@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getEnrolledCourses } from "../redux/features/StudentSlice";
+import { Link } from "react-router-dom";
+import { getAllCourses } from "../redux/features/CommanSlice";
 
 const MyCourses = () => {
   const dispatch = useDispatch();
@@ -9,7 +11,8 @@ const MyCourses = () => {
 
     useEffect(()=>{
         dispatch(getEnrolledCourses());
-    },[]);
+        dispatch(getAllCourses());
+    },[dispatch]);
   
     return (
       <div className="min-h-screen bg-gray-900 text-white px-6 py-12">
@@ -19,7 +22,7 @@ const MyCourses = () => {
         {/* {!courseList.course?"No courses to show":"No courses to show"} */}
           {courseList && courseList.map((course) => (
             <div
-              key={course.id}
+              key={course._id}
               className="bg-gray-800 h-fit rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 p-4"
             >
               <img src={course.thumbnailUrl} alt={course.title} className="w-full h-48 object-cover rounded-xl " />
@@ -28,7 +31,7 @@ const MyCourses = () => {
                 <h2 className="text-2xl font-semibold text-sm mt-1 capitalize">{course.description}</h2>
                 {/* <p className="text-gray-400 mt-2">Instructor: {course.instructor}</p> */}
   
-                <div className="mt-3">
+                <div className="mt-3 mb-6">
                   <p className="text-sm mb-1">Progress: 40%</p>
                   <div className="w-full bg-gray-700 rounded-full h-2.5">
                     <div
@@ -37,10 +40,10 @@ const MyCourses = () => {
                     ></div>
                   </div>
                 </div>
-  
-                <button className="mt-4 w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 py-2 rounded-lg transition duration-300">
+               
+                <Link to={`/student/course-content/${course._id}`} className="px-[12.7vw]  py-3 mx-auto bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500  rounded-lg transition duration-300">
                   Resume Course
-                </button>
+                </Link>
               </div>
             </div>
           ))}

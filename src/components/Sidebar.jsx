@@ -7,7 +7,6 @@ const Sidebar = () => {
   const menuItems = {
     student: [
       { label: "My Courses", link: "/enrolled-courses" },
-      // { label: "AI Tutor", link: "#" },
       { label: "All Courses", link: "/courses" },
       { label: "Assignments", link: "/student/assignments-quiz" },
     ],
@@ -25,32 +24,35 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="w-64 min-h-[70vh] bg-gradient-to-t from-[#E63946] via-[#6D597A] via-[#457B9D] to-[#1D3557]  text-white p-6 flex flex-col justify-between shadow-lg">
-      {/* Logo Section */}
-      <div className="flex items-center justify-between mb-6 border-b-2 pb-2">
-        <h2 className="text-md font-semibold tracking-wide">Get Assistance</h2>
-        <AiLogo />
-      </div>
+    <div className="w-64 min-h-[70vh] bg-[#0F0F0F] text-white p-6 flex flex-col justify-between shadow-xl  border border-gray-800 backdrop-blur-md">
+  {/* Logo Section */}
+  <div className="flex items-center justify-between mb-6 border-b border-gray-700 pb-3">
+    <h2 className="text-lg font-bold tracking-wide text-gray-100">Get Assistance</h2>
+    <AiLogo className="text-[#E63946] animate-pulse" />
+  </div>
 
-      {/* Menu Items */}
-      <ul className="flex-1">
-        {menuItems && menuItems[role].map((item, index) => (
-          <li key={index} className="mb-4">
-            <Link
-              to={item.link}
-              className="block px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 hover:bg-zinc-200 hover:text-[#4F46E5]"
-            >
-              {item.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
+  {/* Menu Items */}
+  <ul className="flex-1 space-y-3">
+    {menuItems && menuItems[role].map((item, index) => (
+      <li key={index}>
+        <Link
+          to={item.link}
+          className="block px-4 py-2 rounded-lg text-xs  font-semibold text-gray-300 transition-all duration-300 hover:bg-[#1F1F1F] hover:text-[#E63946] hover:pl-6 group"
+        >
+          <span className="transition-all duration-300 group-hover:tracking-wide">
+            {item.label}
+          </span>
+        </Link>
+      </li>
+    ))}
+  </ul>
 
-      {/* Footer */}
-      <div className="text-center text-sm text-gray-300 mt-4">
-        © 2025 SheriVerse. All rights reserved.
-      </div>
-    </div>
+  {/* Footer */}
+  <div className="text-center text-xs text-gray-500 mt-6">
+    © 2025 <span className="text-[#E63946] font-semibold">SheriVerse</span>. All rights reserved.
+  </div>
+</div>
+
   );
 };
 

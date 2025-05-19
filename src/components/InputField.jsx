@@ -11,4 +11,4 @@ const InputField = ({ label, type, placeholder }) => {
     );
   };
   
-  export default InputField;
+  export default InputField;
