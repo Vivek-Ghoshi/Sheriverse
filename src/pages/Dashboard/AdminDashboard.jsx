@@ -1,46 +1,60 @@
-// src/pages/Dashboard/AdminDashboard.jsx
-import React from "react";
+import { MonitorSmartphone, UsersRound, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 
 const AdminDashboard = () => {
   return (
-    <div className="min-h-screen bg-[#0F172A] text-white flex ">
-      < Sidebar/>
-      <div className="w-[80vw] p-8">
-      <h1 className="text-5xl font-bold mb-12 text-center">⚙ Admin Dashboard</h1>
+  <div className="min-h-[42vw] bg-[#0F172A] text-white flex">
+  {/* Sidebar - Stays on top on small screens, side on larger */}
+  <Sidebar />
 
-<p className="text-xl opacity-80 text-center mb-12">
-  Manage users, courses, and monitor AI analytics.
-</p>
+  {/* Main Content */}
+  <div className="w-full px-4 sm:px-6 md:px-8 py-10 min-h-screen bg-gradient-to-br from-[#0f0f0f] via-[#1a1a1a] to-[#000000] text-white">
+      {/* Heading */}
+      <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#00FFF0] to-[#007CF0] animate-pulse">
+        ⚙ Admin Dashboard
+      </h1>
 
-<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 max-w-7xl mx-auto">
-  {/* User Management */}
-  <Link to="/admin/users" className="bg-gradient-to-r from-blue-600 to-indigo-500 p-8 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
-    <h2 className="text-3xl font-bold mb-4">👥 Manage Users</h2>
-    <p className="text-lg opacity-80">View, add, or remove users.</p>
-  </Link>
+      <p className="text-lg md:text-xl text-center opacity-80 mb-12">
+        Manage users, courses, and monitor AI analytics.
+      </p>
 
-  {/* Course Management */}
-  <Link to="/admin/manage-courses" className="bg-gradient-to-r from-green-600 to-teal-500 p-8 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
-    <h2 className="text-3xl font-bold mb-4">📚 Manage Courses</h2>
-    <p className="text-lg opacity-80">Create, update, or delete courses.</p>
-  </Link>
+      {/* Grid Section */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-2">
+        {/* USERS CARD */}
+        <Link
+          to="/admin/users"
+          className="bg-[#1c1c1c]/80 border border-[#2e2e2e] rounded-2xl p-6 backdrop-blur-md hover:shadow-[0_0_25px_#00FFF0] hover:scale-[1.03] transition-all duration-300 flex flex-col items-center text-center"
+        >
+          <UsersRound className="text-[#00FFF0] w-12 h-12 mb-4 animate-bounce" />
+          <h2 className="text-2xl font-bold mb-2">Manage Users</h2>
+          <p className="text-gray-400">Add, view, or delete students and admins</p>
+        </Link>
 
-  {/* AI Analytics */}
-  <Link to="/admin/ai-analytics" className="bg-gradient-to-r from-purple-600 to-pink-500 p-8 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
-    <h2 className="text-3xl font-bold mb-4">📊 AI Analytics</h2>
-    <p className="text-lg opacity-80">Track AI tool usage and performance.</p>
-  </Link>
+        {/* COURSES CARD */}
+        <Link
+          to="/admin/manage-courses"
+          className="bg-[#1c1c1c]/80 border border-[#2e2e2e] rounded-2xl p-6 backdrop-blur-md hover:shadow-[0_0_25px_#00FFAB] hover:scale-[1.03] transition-all duration-300 flex flex-col items-center text-center"
+        >
+          <BookOpen className="text-[#00FFAB] w-12 h-12 mb-4 animate-pulse" />
+          <h2 className="text-2xl font-bold mb-2">Manage Courses</h2>
+          <p className="text-gray-400">Create, update or delete any course data</p>
+        </Link>
 
-  {/* System Analytics */}
-  <Link to="/admin/system-analytics" className="bg-gradient-to-r from-yellow-500 to-orange-500 p-8 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
-    <h2 className="text-3xl font-bold mb-4">📈 System Analytics</h2>
-    <p className="text-lg opacity-80">View platform statistics and performance.</p>
-  </Link>
-</div>
+        {/* ANALYTICS CARD */}
+        <Link
+          to="/admin/analytics"
+          className="bg-[#1c1c1c]/80 border border-[#2e2e2e] rounded-2xl p-6 backdrop-blur-md hover:shadow-[0_0_25px_#7F00FF] hover:scale-[1.03] transition-all duration-300 flex flex-col items-center text-center"
+        >
+          <MonitorSmartphone className="text-[#7F00FF] w-12 h-12 mb-4 animate-wiggle" />
+          <h2 className="text-2xl font-bold mb-2">AI Analytics</h2>
+          <p className="text-gray-400">Monitor platform usage and AI reports</p>
+        </Link>
       </div>
     </div>
+</div>
+
+
   );
 };
 

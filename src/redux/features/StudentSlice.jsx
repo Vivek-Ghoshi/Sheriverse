@@ -62,17 +62,14 @@ export const assignment = createAsyncThunk("student/assignments", async () => {
 
 export const editProfile = createAsyncThunk(
   "student/editprofile",
-  async (details) => {
-    for (let pair of details.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }
-
+  async (details,thunkAPI) => {
     const { data } = await apiInstance.post("/student/edit-profile", details, {
       headers: {
                 "Content-Type": "multipart/form-data",
               },
       withCredentials: true,
     });
+    await thunkAPI.dispatch(studentProfile());
     return data;
   }
 );
@@ -91,6 +88,25 @@ export const submitAssignment = createAsyncThunk(
   }
 );
 
+//verify razorpay order
+export const verifyPayment = createAsyncThunk("verifypayment",async(paymentData,thunkAPI)=>{
+    try {
+        const {data} = await apiInstance.post("/payment/verify",paymentData,{withCredentials:true});
+        await thunkAPI.dispatch(getEnrolledCourses());
+        return data;
+    } catch (error) {
+        console.log(error.message);
+    }
+})
+
+export const studentProfile = createAsyncThunk("studentprofile",async()=>{
+  try {
+    const {data} = await apiInstance.get("/student/profile",{withCredentials:true});
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+})
 const studentSlice = createSlice({
   name: "student",
   initialState: {
@@ -101,6 +117,8 @@ const studentSlice = createSlice({
     assignments: [],
     submittedassignments: [],
     loading: false,
+    error:null,
+    success:false
   },
   reducres: {},
   extraReducers: (builder) => {
@@ -108,9 +126,9 @@ const studentSlice = createSlice({
       //    .addCase(getCourses.fulfilled,(state,action)=> {
       //     state.courses = action.payload;
       //    })
-      .addCase(enrollCourse.fulfilled, (state, action) => {
-        state.enrollCourses.push(action.payload);
-      })
+      // .addCase(enrollCourse.fulfilled, (state, action) => {
+      //   state.enrollCourses.push(action.payload);
+      // })
       .addCase(getEnrolledCourses.fulfilled, (state, action) => {
         state.enrollCourses = action.payload;
       })
@@ -128,9 +146,26 @@ const studentSlice = createSlice({
       .addCase(submitAssignment.fulfilled, (state, action) => {
         state.submittedassignments.push(action.payload);
       })
-      .addCase(editProfile.fulfilled, (state, action) => {
-        state.student = action.payload;
-      });
+      .addCase(editProfile.pending,(state)=>{
+        state.loading = true;
+      })
+      .addCase(editProfile.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(verifyPayment.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(verifyPayment.fulfilled, (state,action) => {
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(verifyPayment.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(studentProfile.fulfilled, (state,action)=>{
+         state.student = action.payload;
+      })
   },
 });
 

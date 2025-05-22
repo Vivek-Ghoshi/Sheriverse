@@ -52,7 +52,6 @@ export const allInstructors = createAsyncThunk("admin/instructors",async()=>{
 })
 
 export const uploadContent = createAsyncThunk("uploadContent", async({formData,id})=>{
-    console.log("ye hit hua");
     const {data} = await apiInstance.post(`/admin/courses/${id}/add-content`,formData,{
         withCredentials: true,
         headers: {
@@ -63,9 +62,30 @@ export const uploadContent = createAsyncThunk("uploadContent", async({formData,i
   console.log("data came from route backend ", data);
     return data;
 })
+
+export const getRegisterdStudents = createAsyncThunk("getregisterdstudents", async()=>{
+    const {data} = await apiInstance.get('/admin/all/students',{
+        withCredentials: true,
+    })
+    return data;
+})
+
+export const getRegisterdAdmins = createAsyncThunk("getregisterdadmins", async()=>{
+    const {data} = await apiInstance.get('/admin/all/admins',{withCredentials:true});
+    return data;
+})
+
+export const registerAdmin = createAsyncThunk("registeradmin", async(details)=>{
+    try {
+        const {data} = await apiInstance.post("/admin/create",details,{withCredentials:true});
+        return data;
+    } catch (error) {
+        console.log(error.message);
+    }
+})
 const adminSlice = createSlice({
     name: "admin",
-    initialState: {courses:[], instructors: [],loading: false},
+    initialState: {courses:[], instructors: [],students:[],admins:[],loading: false},
     reducers:{},
     extraReducers : (builder)=>{
         builder
@@ -77,6 +97,9 @@ const adminSlice = createSlice({
               .addCase(deleteCourse.fulfilled, (state,action)=>{
                 state.courses = state.courses.filter((course)=> course.id != action.payload);
               })
+              .addCase(registerAdmin.fulfilled,(state,action)=>{
+                state.admins.push(action.payload);
+              })
               .addCase(addInstructor.fulfilled, (state,action)=>{
                 state.instructors.push(action.payload);
               })
@@ -87,8 +110,15 @@ const adminSlice = createSlice({
                 state.instructors = action.payload;
              })
              .addCase(uploadContent.fulfilled,(state,action)=>{
-             state.courses.push(action.payload);
-           })
+                state.courses.push(action.payload);
+             })
+             .addCase(getRegisterdStudents.fulfilled, (state,action)=>{
+                state.students = action.payload;
+             })
+             .addCase(getRegisterdAdmins.fulfilled,(state,action)=>{
+                state.admins = action.payload;
+             })
+
     },
 })
 

@@ -13,6 +13,7 @@ export default function EditProfile() {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
+    console.log(typeof(data.phone));
     formData.append("name",data.name);
     formData.append("phone",data.phone)
     formData.append("bio", data.bio);

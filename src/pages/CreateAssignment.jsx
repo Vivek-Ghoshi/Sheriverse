@@ -38,7 +38,7 @@ const CreateAssignment = () => {
         }
     }
   return (
-    <div className='w-[99vw] h-[42vw] bg-zinc-900 flex items-center justify-center'>
+    <div className='w-[99vw] h-[42vw] bg-black flex items-center justify-center'>
        {/* Assignment Creation Form */}
        <form onSubmit={handleSubmit(assignmentHandler)} encType='multipart/form-data'>
        <motion.div 

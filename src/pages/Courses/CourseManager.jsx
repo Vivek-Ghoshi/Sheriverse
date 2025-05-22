@@ -33,7 +33,7 @@ const CourseManager = () => {
         {courses.map((course) => (
           <div
             key={course._id}
-            className="bg-zinc-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300"
+            className="bg-zinc-900 h-fit rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300"
           >
             <img
               src={course.thumbnailUrl}
@@ -43,7 +43,7 @@ const CourseManager = () => {
             <div className="p-4">
               <h2 className="text-xl font-semibold mb-1 capitalize">{course.title}</h2>
               <p className="text-gray-400 text-sm mb-4">
-                {course.description}
+                {course.description.split(" ").slice(0,5).join(" ")}...
               </p>
               <div className="flex justify-between">
                 <Link to={`/admin/courses/${course._id}/add-content`}

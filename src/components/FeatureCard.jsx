@@ -13,7 +13,7 @@ const FeatureCard = ({ title, description ,icon }) => {
 </h3>
 
 {/* Description with Soft Visibility Effect */}
-<p className="text-zinc-100 transition-all duration-300 hover:text-gray-500">
+<p className="text-zinc-700 text-xs font-semibold transition-all duration-300 hover:text-gray-500">
 {description}
 </p>
 </div>

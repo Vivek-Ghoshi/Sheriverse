@@ -1,8 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Footer from "../components/Footer";
 
 const AboutUs = () => {
   return (
+    <>
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-8">
       <motion.h1
         className="text-5xl font-bold text-blue-400 mb-6"
@@ -67,6 +69,8 @@ const AboutUs = () => {
         </a>
       </motion.div>
     </div>
+      <Footer/>
+      </>
   );
 };
 

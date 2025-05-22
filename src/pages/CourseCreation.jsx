@@ -2,45 +2,91 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { createCourse } from "../redux/features/AdminSlice";
 import { useNavigate } from "react-router-dom";
+import {
+  FiBookOpen,
+  FiImage,
+  FiVideo,
+  FiUser,
+  FiClock,
+  FiDollarSign,
+} from "react-icons/fi";
+import { useState } from "react";
 
 const CourseCreation = () => {
   const navigate = useNavigate();
-  const {register,handleSubmit , reset, formState:{errors}} = useForm();
+  const[popup, setPopup] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const dispatch = useDispatch();
-
-  const courseHandler = (data)=>{
+  
+  const courseHandler = async (data) => {
     const formData = new FormData();
-    formData.append("title",data.title);
-    formData.append("description",data.description);
-    formData.append("price",data.price);
-    formData.append("instructor",data.instructor);
-    formData.append("duration",data.duration);
-    if(data.image[0]){
-      formData.append("image",data.image[0])
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("price", data.price);
+    formData.append("instructor", data.instructor);
+    formData.append("duration", data.duration);
+    if (data.image[0]) {
+      formData.append("image", data.image[0]);
     }
-    if(data.video[0]){
-      formData.append("video",data.video[0])
+    if (data.video[0]) {
+      formData.append("video", data.video[0]);
     }
-
-    dispatch(createCourse(formData));
-    navigate('/courses');
-  }
+    setPopup(true);
+    setTimeout(() => {
+      setPopup(false);
+    }, 6000);
+    const response = await dispatch(createCourse(formData));
+    reset();
+    if (createCourse.fulfilled.match(response)) {
+      navigate("/courses");
+    }
+  };
   return (
-    <div className="w-5/5 max-h-[90vh] flex flex-col items-center justify-center text-white pt-[9.2vw]">
-      <div className="bg-gray-800 w-screen h-[20vh] pt-6  text-center"><h1 className="text-5xl capitalize font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500">Create course</h1></div>
-     <form onSubmit={handleSubmit(courseHandler)} encType="multipart/form-data" >
-      <div className="w-screen h-fit max-w-full bg-gray-800 p-6 shadow-xl flex">
-        {/* Left Section - Form */}
-        <div className="w-1/2 p-5">
-          <div className="space-y-4">
+    <div className="w-full min-h-screen bg-[#0F0F1A] text-white flex flex-col items-center">
+      {popup && (
+        <div className="fixed top-6 right-6 z-50">
+          <div className="bg-gradient-to-r from-blue-700 via-purple-600 to-indigo-700 text-white px-6 py-4 rounded-xl shadow-2xl backdrop-blur-md border border-white/10 animate-bounce transition-all duration-300 ease-in-out flex items-center space-x-4">
+            <span className="text-2xl animate-spin-slow">🚀</span>
+            <div>
+              <h3 className="font-semibold text-lg">Creating</h3>
+              <p className="text-sm text-gray-200">
+                Just wait for a while
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Header */}
+      <div className="w-full bg-[#1E1E2F] h-[20vh] flex items-center justify-center text-center">
+        <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 transition-all duration-500">
+          Create Course
+        </h1>
+      </div>
+
+      {/* Form */}
+      <form
+        onSubmit={handleSubmit(courseHandler)}
+        encType="multipart/form-data"
+        className="w-full max-w-7xl mx-auto px-4 py-8 animate-fade-in"
+      >
+        <div className="flex flex-col lg:flex-row gap-6 bg-[#1E1E2F] rounded-xl shadow-2xl p-6">
+          {/* Left Section */}
+          <div className="w-full lg:w-1/2 space-y-6">
             {/* Course Title */}
             <div>
-              <label className="block text-lg mb-2">Course Title</label>
+              <label className="block text-lg mb-2 flex items-center gap-2">
+                <FiBookOpen /> Course Title
+              </label>
               <input
                 type="text"
-                {...register("title",{required:"title is required"})}
+                {...register("title", { required: "Title is required" })}
                 placeholder="Enter course title"
-                className="w-full mb-3 p-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                className="w-full p-3 bg-[#2A2A3B] border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               />
             </div>
 
@@ -48,83 +94,96 @@ const CourseCreation = () => {
             <div>
               <label className="block text-lg mb-2">Course Description</label>
               <textarea
-                {...register("description",{required:"description is required"})}
+                {...register("description", {
+                  required: "Description is required",
+                })}
                 placeholder="Describe the course"
                 rows="5"
-                className="resize-none mb-3 w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                className="w-full p-3 resize-none bg-[#2A2A3B] border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               />
             </div>
 
             {/* Course Thumbnail */}
             <div>
-              <label className="block text-lg mb-2">Course Thumbnail</label>
+              <label className="block text-lg mb-2 flex items-center gap-2">
+                <FiImage /> Course Thumbnail
+              </label>
               <input
                 type="file"
                 {...register("image")}
-                className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                className="w-full p-3 bg-[#2A2A3B] border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               />
             </div>
           </div>
-        </div>
 
-        {/* Right Section - Form */}
-        <div className="w-1/2 p-5">
-          <div className="space-y-4">
-             {/* Course Video */}
-             <div>
-              <label className="block text-lg mb-2">Course Intro </label>
+          {/* Right Section */}
+          <div className="w-full lg:w-1/2 space-y-6">
+            {/* Intro Video */}
+            <div>
+              <label className="block text-lg mb-2 flex items-center gap-2">
+                <FiVideo /> Course Intro
+              </label>
               <input
                 type="file"
-                {...register("video",{required:"Intro video is required"})}
-                placeholder="Choose file"
-                className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                {...register("video", {
+                  required: "Intro video is required",
+                })}
+                className="w-full p-3 bg-[#2A2A3B] border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               />
             </div>
-            {/* Course Price */}
+
+            {/* Price */}
             <div>
-              <label className="block text-lg mb-2">Course Price</label>
+              <label className="block text-lg mb-2 flex items-center gap-2">
+                <FiDollarSign /> Course Price
+              </label>
               <input
                 type="text"
-                {...register("price",{required:"price is required"})}
+                {...register("price", { required: "Price is required" })}
                 placeholder="Enter course price"
-                className="w-full mb-3 p-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                className="w-full p-3 bg-[#2A2A3B] border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               />
             </div>
 
             {/* Instructor Name */}
             <div>
-              <label className="block text-lg mb-2">Instructor Name</label>
+              <label className="block text-lg mb-2 flex items-center gap-2">
+                <FiUser /> Instructor Name
+              </label>
               <input
                 type="text"
-                {...register("instructor",{required:"instructor is required"})}
-
+                {...register("instructor", {
+                  required: "Instructor is required",
+                })}
                 placeholder="Enter instructor name"
-                className="w-full mb-3 p-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                className="w-full p-3 bg-[#2A2A3B] border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               />
             </div>
 
-            {/* Course Duration */}
+            {/* Duration */}
             <div>
-              <label className="block text-lg mb-2">Course Duration (in hours)</label>
+              <label className="block text-lg mb-2 flex items-center gap-2">
+                <FiClock /> Course Duration (in hours)
+              </label>
               <input
                 type="text"
-                {...register("duration",{required:"duration is required"})}
-
+                {...register("duration", {
+                  required: "Duration is required",
+                })}
                 placeholder="Enter course duration"
-                className="w-full mb-3 p-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                className="w-full p-3 bg-[#2A2A3B] border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               />
             </div>
 
-            {/* Submit Button */}
+            {/* Submit */}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 py-3 rounded-lg text-lg font-semibold transition duration-300 shadow-lg hover:shadow-purple-500/50 mt-6"
+              className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 py-3 rounded-lg text-lg font-semibold transition duration-300 shadow-lg hover:shadow-purple-500/50 mt-4"
             >
               Create Course
             </button>
           </div>
         </div>
-      </div>
       </form>
     </div>
   );

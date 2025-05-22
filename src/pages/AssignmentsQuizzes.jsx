@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { assignment } from "../redux/features/StudentSlice";
+import ComingSoonNotice from "../components/ComingSoonNotice";
+
 
 const AssignmentsQuizzes = () => {
     const dispatch = useDispatch();
@@ -13,8 +15,8 @@ const AssignmentsQuizzes = () => {
     return (
       <div className="min-h-screen bg-gray-900 text-white px-8 py-12">
         <h1 className="text-4xl font-bold mb-8">Assignments & Quizzes</h1>
-  
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <ComingSoonNotice/>
+        <div className="mt-6 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {assignments?.map((task) => (
             <div
               key={task._id}

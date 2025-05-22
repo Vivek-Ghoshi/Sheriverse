@@ -37,7 +37,7 @@ const Sidebar = () => {
       <li key={index}>
         <Link
           to={item.link}
-          className="block px-4 py-2 rounded-lg text-xs  font-semibold text-gray-300 transition-all duration-300 hover:bg-[#1F1F1F] hover:text-[#E63946] hover:pl-6 group"
+          className="block px-4 py-2 rounded-lg text-xs  font-semibold text-white transition-all duration-300 hover:bg-[#1F1F1F] hover:text-[#E63946] hover:pl-6 group"
         >
           <span className="transition-all duration-300 group-hover:tracking-wide">
             {item.label}

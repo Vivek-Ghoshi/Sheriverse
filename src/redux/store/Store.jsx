@@ -2,11 +2,13 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/AuthSlice";
 import adminReducer from "../features/AdminSlice";
 import studentReducer from "../features/StudentSlice";
+import paymentReducer from "../features/PaymentSlice";
 import instructorReducer from "../features/InstructorSlice";
 import commanReducer from "../features/CommanSlice";
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
+
 
 const persistConfig = {
     key: 'root',
@@ -19,7 +21,8 @@ const rootReducer = combineReducers({
     admin:adminReducer,
     instructor:instructorReducer,
     student: studentReducer,
-    comman:commanReducer
+    comman:commanReducer,
+    payment: paymentReducer
 })
 const persistedReducer = persistReducer(persistConfig,rootReducer);
 export const store = configureStore({

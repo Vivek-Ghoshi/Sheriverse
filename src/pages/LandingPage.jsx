@@ -21,7 +21,7 @@ const LandingPage = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-zinc-900 img">
+    <div className="min-h-screen bg-black img">
     {/* Hero Section */}
     <section className="text-center pt-24  px-8">
       <h1 className="text-6xl font-extrabold mb-6 drop-shadow-lg 
@@ -30,7 +30,7 @@ const LandingPage = () => {
         A Whole Universe of Learning
       </h1>
       <p className="text-lg text-gray-200 mb-8 animate-fade-in">
-        A complete education plateform ! By <span className="text-red-600 underline text-2xl font-bold">Sheryians</span> 
+        A complete education plateform ! Developed By <span className="text-red-600  text-2xl font-bold">Vivek</span> 
       </p>
        <Link to={'/login'} className="bg-[#E63946] font-semibold text-white px-8 py-3 rounded-xl shadow-lg transition-all 
                          duration-300 transform hover:scale-105 hover:bg-[#FF6B9F] hover:shadow-2xl">
@@ -40,7 +40,7 @@ const LandingPage = () => {
     </section>
   
     {/* Features Section */}
-    <section className="py-8 bg-[#EEF1F6] bg-zinc-900 overflow-hidden">
+    <section className="py-8 bg-[#EEF1F6] bg-black overflow-hidden">
       <h2 className="text-4xl font-extrabold text-center text-[#1D3557] mb-12
                      transition-all duration-500 hover:scale-102 hover:text-[#E63946] bg-gradient-to-r from-[#E63946] via-[#457B9D] to-[#1D3557] 
                bg-clip-text text-transparent">

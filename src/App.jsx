@@ -23,6 +23,10 @@ import ContentUploader from './pages/Courses/ContentUploader'
 import CourseManager from './pages/Courses/CourseManager'
 import AdminCourseMonitor from './pages/Courses/AdminCourseMonitor'
 import EditProfile from './components/EditProfile'
+import AdminManageUsers from './pages/Admin/AdminManageUsers'
+import AdminManageStudents from './pages/Admin/AdminManageStudents'
+import AddAdminAccount from './pages/Admin/AddAdminAccount'
+import AdminAccounts from './pages/Admin/AdminAccounts'
 
 const App = () => {
   return (
@@ -62,13 +66,18 @@ const App = () => {
         <Route path='/admin/dashboard' element={ <AdminDashboard/> }/>
         <Route path='/admin/add-instructor' element={ <AddInstructor/> }/>
         <Route path='/admin/all-instructors' element={ <Instructors/> }/>
+        <Route path='/admin/manage-admins' element={ <AdminAccounts/> }/>
+
 
         {/* {Cousers Routes } */}
         <Route path='/courses' element={ <CourseList/>}/>
         <Route path='/Enrolled-courses' element={ <MyCourses/> }/>
         
         <Route path='/courses/:id' element={ <CourseDetails/> }/>
-
+        <Route path='/admin/users' element={ <AdminManageUsers/> }/>
+        <Route path='/admin/manage-students' element={ <AdminManageStudents/> }/>
+        <Route path='/admin/add-admin-account' element={ <AddAdminAccount/> }/>
+        
         {/* {Ai Hub} */}
         {/* <Route path='/ai-hub' element={ <AIHub/> }/> */}
 
