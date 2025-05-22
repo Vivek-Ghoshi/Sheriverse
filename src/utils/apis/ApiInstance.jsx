@@ -1,5 +1,4 @@
 import axios from "axios";
-
 const baseUrl = "https://sheriverse-server.onrender.com/api";
 
 const apiInstance = axios.create({
