@@ -56,8 +56,7 @@ export const updateAssignment = createAsyncThunk(
     try {
       const { data } = await apiInstance.post(
         `/instructor/assignments/${id}/update`,
-        formData,
-        { withCredentials: true }
+        formData
       );
       return data;
     } catch (error) {
@@ -70,9 +69,7 @@ export const deleteAssignment = createAsyncThunk(
   "instructor/deleteAssignment",
   async (id) => {
     try {
-      await apiInstance.get(`/instructor/assignments/${id}/delete`, {
-        withCredentials: true,
-      });
+      await apiInstance.get(`/instructor/assignments/${id}/delete`);
       return id;
     } catch (error) {
       console.log(error.message);

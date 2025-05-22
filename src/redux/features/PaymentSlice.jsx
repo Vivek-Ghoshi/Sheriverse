@@ -4,7 +4,7 @@ import apiInstance from "../../utils/apis/ApiInstance";
 //create razorpay order
 export const createOrder = createAsyncThunk("createorder", async(id)=>{
    try {
-       const {data} = await apiInstance.post('/payment/create-order',{id},{withCredentials:true});
+       const {data} = await apiInstance.post('/payment/create-order',{id});
        return data;
    } catch (error) {
       console.log(error.message);

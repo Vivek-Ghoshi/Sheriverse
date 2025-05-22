@@ -7,7 +7,6 @@ export const createCourse = createAsyncThunk("admin/createCourse",async(courseDa
             headers: {
                 "Content-Type": "multipart/form-data",
               },
-            withCredentials:true
         });
         return data;
     } catch (error) {
@@ -26,7 +25,7 @@ export const deleteCourse = createAsyncThunk("admin/deleteCourse", async(id)=>{
 
 export const addInstructor = createAsyncThunk("admin/addinstructor", async (details)=>{
     try {
-        const {data} = await apiInstance.post(`/admin/instructor/create`,details,{withCredentials:true});
+        const {data} = await apiInstance.post(`/admin/instructor/create`,details);
         return data;
     } catch (error) {
         console.log(error.message);
@@ -35,9 +34,7 @@ export const addInstructor = createAsyncThunk("admin/addinstructor", async (deta
 
 export const removeInstructor = createAsyncThunk("admin/removeinstructor", async (id)=>{
     try {
-      await apiInstance.get(`/admin/instructor/remove/${id}`,{
-            withCredentials:true,
-        });
+      await apiInstance.get(`/admin/instructor/remove/${id}`);
         return id;
     } catch (error) {
         console.log(error);
@@ -45,15 +42,12 @@ export const removeInstructor = createAsyncThunk("admin/removeinstructor", async
 })
 
 export const allInstructors = createAsyncThunk("admin/instructors",async()=>{
-    const {data} = await apiInstance.get('/admin/all-instructors',{
-        withCredentials:true,
-    })
+    const {data} = await apiInstance.get('/admin/all-instructors')
     return data;
 })
 
 export const uploadContent = createAsyncThunk("uploadContent", async({formData,id})=>{
     const {data} = await apiInstance.post(`/admin/courses/${id}/add-content`,formData,{
-        withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -64,20 +58,18 @@ export const uploadContent = createAsyncThunk("uploadContent", async({formData,i
 })
 
 export const getRegisterdStudents = createAsyncThunk("getregisterdstudents", async()=>{
-    const {data} = await apiInstance.get('/admin/all/students',{
-        withCredentials: true,
-    })
+    const {data} = await apiInstance.get('/admin/all/students')
     return data;
 })
 
 export const getRegisterdAdmins = createAsyncThunk("getregisterdadmins", async()=>{
-    const {data} = await apiInstance.get('/admin/all/admins',{withCredentials:true});
+    const {data} = await apiInstance.get('/admin/all/admins');
     return data;
 })
 
 export const registerAdmin = createAsyncThunk("registeradmin", async(details)=>{
     try {
-        const {data} = await apiInstance.post("/admin/create",details,{withCredentials:true});
+        const {data} = await apiInstance.post("/admin/create",details);
         return data;
     } catch (error) {
         console.log(error.message);

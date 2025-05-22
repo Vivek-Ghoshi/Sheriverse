@@ -3,9 +3,7 @@ import apiInstance from "../../utils/apis/ApiInstance";
 
 export const enrollCourse = createAsyncThunk("student/enroll", async (id) => {
   try {
-    await apiInstance.get(`/student/courses/${id}/enroll`, {
-      withCredentials: true,
-    });
+    await apiInstance.get(`/student/courses/${id}/enroll`);
     return id;
   } catch (error) {
     console.log(error.message);
@@ -16,9 +14,7 @@ export const getEnrolledCourses = createAsyncThunk(
   "student/getenrolledcourses",
   async () => {
     try {
-      const { data } = await apiInstance.get(`/student/enrolled-courses`, {
-        withCredentials: true,
-      });
+      const { data } = await apiInstance.get(`/student/enrolled-courses`);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -29,9 +25,7 @@ export const getDetails = createAsyncThunk(
   "student/course-details",
   async (id, { rejectWithValue }) => {
     try {
-      const { data } = await apiInstance.get(`/student/courses/${id}`, {
-        withCredentials: true,
-      });
+      const { data } = await apiInstance.get(`/student/courses/${id}`);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -54,9 +48,7 @@ export const getCourseContent = createAsyncThunk(
 );
 
 export const assignment = createAsyncThunk("student/assignments", async () => {
-  const { data } = await apiInstance.get("/student/assignments", {
-    withCredentials: true,
-  });
+  const { data } = await apiInstance.get("/student/assignments");
   return data;
 });
 
@@ -67,7 +59,6 @@ export const editProfile = createAsyncThunk(
       headers: {
                 "Content-Type": "multipart/form-data",
               },
-      withCredentials: true,
     });
     await thunkAPI.dispatch(studentProfile());
     return data;
@@ -91,7 +82,7 @@ export const submitAssignment = createAsyncThunk(
 //verify razorpay order
 export const verifyPayment = createAsyncThunk("verifypayment",async(paymentData,thunkAPI)=>{
     try {
-        const {data} = await apiInstance.post("/payment/verify",paymentData,{withCredentials:true});
+        const {data} = await apiInstance.post("/payment/verify",paymentData);
         await thunkAPI.dispatch(getEnrolledCourses());
         return data;
     } catch (error) {
@@ -101,7 +92,7 @@ export const verifyPayment = createAsyncThunk("verifypayment",async(paymentData,
 
 export const studentProfile = createAsyncThunk("studentprofile",async()=>{
   try {
-    const {data} = await apiInstance.get("/student/profile",{withCredentials:true});
+    const {data} = await apiInstance.get("/student/profile");
     return data;
   } catch (error) {
     console.log(error.message);

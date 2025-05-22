@@ -2,9 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import apiInstance from "../../utils/apis/ApiInstance";
 
 export const getAllCourses = createAsyncThunk("getallcourses", async()=>{
-    const  { data }  = await apiInstance.get('/courses',{
-        withCredentials:true,
-    });
+    const  { data }  = await apiInstance.get('/courses');
     return data;
 })
 

@@ -4,7 +4,7 @@ import { studentProfile } from "./StudentSlice";
 
 export const registerUser = createAsyncThunk("auth/register", async(credentials,thunkAPI)=>{
   try {
-    const { data } = await apiInstance.post('/student/register',credentials,{withCredentials:true});
+    const { data } = await apiInstance.post('/student/register',credentials);
     await thunkAPI.dispatch(studentProfile())
     return data;
   } catch (error) {
@@ -13,7 +13,7 @@ export const registerUser = createAsyncThunk("auth/register", async(credentials,
 })
 export const loginUser = createAsyncThunk("auth/login",async ({role,credentials},thunkAPI)=>{
   try {
-    const {data} = await apiInstance.post(`/${role}/login`, credentials , {withCredentials: true});
+    const {data} = await apiInstance.post(`/${role}/login`, credentials);
     if(role === "student"){
       await thunkAPI.dispatch(studentProfile());
     }
@@ -27,7 +27,7 @@ export const loginUser = createAsyncThunk("auth/login",async ({role,credentials}
 
 export const logoutUser = createAsyncThunk("auth/logout", async(role)=>{
   try {
-    await apiInstance.get(`/${role}/logout`, {withCredentials: true});
+    await apiInstance.get(`/${role}/logout`);
     return null;
   } catch (error) {
     console.log(error.message);
